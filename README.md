@@ -6,10 +6,15 @@
 <h3>Calling Method</h3>
 
 sample_image=ImageToArray().getImage("...path",n=2)
+
 meanfilter=ImageToCircuit(sample_image,2)
+
 meanfilter.authenticate() #should authenticate if your device is not authenticate otherwise ignore this step
+
 meanfilter.encodeToEneqr()
+
 meanfilter.apply_filter()
+
 meanfilter.showCircuit()
 
 
