@@ -23,6 +23,8 @@ meanfilter.showCircuit()
 <h2>Final Image of Mean Filter</h2>
 ![image](https://github.com/Risav25Pokhrel/Quantum-Mean-Filter/assets/103576193/74c5087e-983c-4d0b-abdf-5074e0e0a987)
 
+
+
 TODO:
  Applying mean filter for GQIR image representation for any size image
  Implementation of the Quantum Non-Modular Floating Point Division
