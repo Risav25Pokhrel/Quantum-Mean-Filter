@@ -20,7 +20,6 @@ class ImageToCircuit:
    __toDecimal= lambda self,binary_num: int(binary_num, 2)
 
    def __init__(self,image:np.array,kernelSize:int):
-    classiq.authenticate()
     self.model=Model()
     self.__h_params=HGate()
     self.__i_params=IGate()
@@ -69,6 +68,11 @@ class ImageToCircuit:
       self.__leftargReg[i]=model.IGate(self.__i_params)[TARGET]
     return model
 
+
+   def authenticate(self):
+     classiq.authenticate()
+
+    
    def encodeToEneqr(self):
     x=int(self.__imageSize/2)
     for m in range(self.__imageSize*self.__imageSize):
@@ -169,8 +173,6 @@ class ImageToCircuit:
     k=self.model.Adder(add_params,in_wires={'left_arg':self.__leftargReg,'right_arg':self.__rightReg})
     self.__leftargReg=k['left_arg']
     self.__rightReg=k['right_arg']
-    # self.__controlledCopy(x,y,self.__inreg,self.__leftargReg,no_of_qubit=self.r)
-    # self.__controlledCopy(0,0,self.__ireg,self.__rightReg)
     self.__controlledCopy(x,y,k['sum'],self.__inreg,no_of_qubit=self.r)
 
       #upper three step can be reduced if we can reset qubit i.e. qc.reset(self.__inreg) if available
@@ -267,6 +269,7 @@ gray_img = img.convert("L")
 resized_image=gray_img.resize(new_size)
 sample_image=np.array(resized_image)
 meanfilter=ImageToCircuit(sample_image,2)
+meanfilter.authenticate() #should authenticate if your device is not authenticate otherwise ignore this step
 meanfilter.encodeToEneqr()
 meanfilter.apply_filter()
 meanfilter.showCircuit()
