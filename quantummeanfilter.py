@@ -13,8 +13,17 @@ from PIL import Image
 import numpy as np
 import math
 
-class ImageToCircuit:
+class ImageToArray:
+     def getImage(self,path,n:int=2):
+      img=Image.open(path)# image path
+      new_size = (n, n)
+      gray_img = img.convert("L")
+      resized_image=gray_img.resize(new_size)
+      _image=np.array(resized_image)
+      return _image
 
+
+class ImageToCircuit:
    __toBinary= lambda self,x,size:bin(x)[2:].zfill(size)
    __applyLog= lambda  self,number,base:int(math.ceil(math.log(number,base)))
    __toDecimal= lambda self,binary_num: int(binary_num, 2)
@@ -72,7 +81,6 @@ class ImageToCircuit:
    def authenticate(self):
      classiq.authenticate()
 
-    
    def encodeToEneqr(self):
     x=int(self.__imageSize/2)
     for m in range(self.__imageSize*self.__imageSize):
@@ -260,16 +268,3 @@ class ImageToCircuit:
 
    def measure(self):
     results = execute(self.quantum_program).result()
-
-
-img=Image.open("....path")# image path
-n=2
-new_size = (n, n)
-gray_img = img.convert("L")
-resized_image=gray_img.resize(new_size)
-sample_image=np.array(resized_image)
-meanfilter=ImageToCircuit(sample_image,2)
-meanfilter.authenticate() #should authenticate if your device is not authenticate otherwise ignore this step
-meanfilter.encodeToEneqr()
-meanfilter.apply_filter()
-meanfilter.showCircuit()
